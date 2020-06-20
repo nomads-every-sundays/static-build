@@ -9,6 +9,7 @@ module.exports = (env) => {
         mode: env.production ? 'production' : 'development',
         entry: {
             main: path.resolve(__dirname, 'src/js/main.js'),
+            vue:  'vue/dist/vue.esm-bundler.js',
         },
         output: {
             path: path.resolve(__dirname, 'dist'),
