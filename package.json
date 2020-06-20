@@ -4,7 +4,10 @@
   "description": "This is the base for static site builds.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "development": "webpack  --config=webpack.config.js --env.development",
+    "production": "webpack  --config=webpack.config.js --env.production",
+    "start:dev": "webpack-dev-server --config=webpack.config.js --env.development"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,45 @@
   "bugs": {
     "url": "https://github.com/nomads-every-sundays/static-build/issues"
   },
-  "homepage": "https://github.com/nomads-every-sundays/static-build#readme"
+  "homepage": "https://github.com/nomads-every-sundays/static-build#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.10.2",
+    "lodash": "^4.17.15",
+    "vue": "^3.0.0-beta.15"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-proposal-async-generator-functions": "^7.10.1",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-export-default-from": "^7.10.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.1",
+    "@babel/plugin-transform-arrow-functions": "^7.10.1",
+    "@babel/plugin-transform-async-to-generator": "^7.10.1",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.1",
+    "@babel/plugin-transform-object-assign": "^7.10.1",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/runtime-corejs3": "^7.10.2",
+    "autoprefixer": "^9.8.0",
+    "babel-loader": "^8.1.0",
+    "core-js": "^3.6.5",
+    "css-loader": "^3.2.0",
+    "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
+    "extract-loader": "^5.1.0",
+    "file-loader": "^6.0.0",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-scss": "^2.1.1",
+    "sass-loader": "^8.0.0",
+    "vue-loader": "^15.9.2",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.11.0"
+  }
 }
