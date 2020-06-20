@@ -1,6 +1,5 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const htmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const babelConfig = require('./babel.config.json');
