@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/nomads-every-sundays/static-build/issues"
   },
-  "homepage": "https://github.com/nomads-every-sundays/static-build#readme"
+  "homepage": "https://github.com/nomads-every-sundays/static-build#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3"
+  }
 }
