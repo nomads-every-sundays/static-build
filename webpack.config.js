@@ -2,7 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { VueLoaderPlugin } = require('vue-loader');
 const babelConfig = require('./babel.config.json');
 
 module.exports = (env) => {
@@ -26,6 +26,7 @@ module.exports = (env) => {
             compress: true,
             port: 9000
         },
+        devtool: env.production ? 'source-map' : 'eval-source-map',
         watch: !env.production,
         module: {
             rules: [
@@ -81,6 +82,7 @@ module.exports = (env) => {
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,
+                    // include: [path.join(__dirname, 'src/js/main.js')],
                     use: [
                         {
                             loader: 'babel-loader',
@@ -123,6 +125,17 @@ module.exports = (env) => {
                 },
             ],
         },
+        resolve: {
+            alias: {
+                // this isn't technically needed, since the default `vue` entry for bundlers
+                // is a simple `export * from '@vue/runtime-dom`. However having this
+                // extra re-export somehow causes webpack to always invalidate the module
+                // on the first HMR update and causes the page to reload.
+                // 'vue': '@vue/runtime-dom'
+                // For my current version of Vue
+                'vue': 'vue/dist/vue.esm-bundler.js'
+            }
+        },
         plugins: [
             new CopyWebpackPlugin({
                 patterns: [
@@ -133,6 +146,10 @@ module.exports = (env) => {
                     {
                         from: path.resolve(__dirname, 'src/fonts'),
                         to: path.resolve(__dirname, 'dist/fonts'),
+                    },
+                    {
+                        from: path.resolve(__dirname, 'src/html'),
+                        to: path.resolve(__dirname, 'dist'),
                     },
                 ]
             }),
