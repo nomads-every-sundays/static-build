@@ -1,6 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const babelConfig = require('./babel.config.json');
 
@@ -91,6 +92,14 @@ module.exports = (env) => {
                     ],
                 },
                 {
+                    test: /\.(png|jpe?g|gif)$/i,
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        publicPath: path.resolve(__dirname, 'dist/img'),
+                    },
+                },
+                {
                     test: /\.(html)$/i,
                     use: [
                         {
@@ -115,6 +124,18 @@ module.exports = (env) => {
             ],
         },
         plugins: [
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: path.resolve(__dirname, 'src/img'),
+                        to: path.resolve(__dirname, 'dist/img'),
+                    },
+                    {
+                        from: path.resolve(__dirname, 'src/fonts'),
+                        to: path.resolve(__dirname, 'dist/fonts'),
+                    },
+                ]
+            }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
                 // all options are optional
