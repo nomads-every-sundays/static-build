@@ -1,0 +1,19 @@
+{
+  "name": "static-build",
+  "version": "20.5.1",
+  "description": "This is the base for static site builds.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nomads-every-sundays/static-build.git"
+  },
+  "author": "Keith Murphy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nomads-every-sundays/static-build/issues"
+  },
+  "homepage": "https://github.com/nomads-every-sundays/static-build#readme"
+}
