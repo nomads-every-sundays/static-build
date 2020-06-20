@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const htmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const babelConfig = require('./babel.config.json');
 
@@ -10,7 +11,7 @@ module.exports = (env) => {
             main: path.resolve(__dirname, 'src/js/main.js'),
         },
         output: {
-            path: path.resolve(__dirname),
+            path: path.resolve(__dirname, 'dist'),
             filename: 'js/[name].js'
         },
         optimization: {
@@ -18,6 +19,11 @@ module.exports = (env) => {
                 chunks: 'async',
                 minSize: 30000,
             },
+        },
+        devServer: {
+            contentBase: path.join(__dirname, 'dist'),
+            compress: true,
+            port: 9000
         },
         watch: !env.production,
         module: {
@@ -29,7 +35,7 @@ module.exports = (env) => {
                         {
                             loader: MiniCssExtractPlugin.loader,
                             options: {
-                                publicPath: path.resolve(__dirname, `css/`),
+                                publicPath: path.resolve(__dirname, `dist/css/`),
                             },
                         },
                         {
@@ -80,6 +86,28 @@ module.exports = (env) => {
                             options: {
                                 presets: babelConfig.presets,
                                 plugins: babelConfig.plugins,
+                            },
+                        },
+                    ],
+                },
+                {
+                    test: /\.(html)$/i,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {
+                                name: '[name].[ext]',
+                                publicPath: path.resolve(__dirname, 'dist'),
+                            },
+                        },
+                        {
+                            loader: 'extract-loader'
+                        },
+                        {
+                            loader: 'html-loader',
+                            options: {
+                                attributes: false,
+                                minimize: false,
                             },
                         },
                     ],
