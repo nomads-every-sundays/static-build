@@ -2,12 +2,13 @@ import '../sass/main.scss';
 
 // Create our app
 import Vue from 'vue';
-import { createApp } from 'vue';
-import App from './App.vue';
+import Header from "./components/Header.vue";
+import Testing from "./components/Testing.vue";
 
-import Header from './components/Header.vue';
-// createCommentVNode('Header');
+Vue.component('Header', Header);
+Vue.component('Testing', Testing);
+// createApp(App).mount("#app");
 
-Vue.component('Header');
-
-createApp(App).mount("#app");
+new Vue({
+    el: '#app',
+});

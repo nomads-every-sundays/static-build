@@ -1,5 +1,6 @@
 <template>
    <div class="main-wrapper">
+      <Header></Header>
       <slot></slot>
    </div>
 </template>
@@ -13,7 +14,6 @@
         name: 'App',
         components: {
             Header,
-            Testing,
         }
     }
 </script>

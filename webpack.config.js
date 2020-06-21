@@ -1,7 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const babelConfig = require('./babel.config.json');
 
 module.exports = (env) => {
@@ -10,7 +10,7 @@ module.exports = (env) => {
         entry: {
             main: path.resolve(__dirname, 'src/js/main.js'),
             // vue:  'vue/dist/vue.esm-bundler.js',
-            vue:  '@vue/runtime-dom',
+            vue:  'vue/dist/vue.esm.js',
         },
         output: {
             path: path.resolve(__dirname, 'dist'),
@@ -69,13 +69,6 @@ module.exports = (env) => {
                     test: /\.vue$/,
                     exclude: /node_modules/,
                     use: [
-                        // {
-                        //     loader: 'babel-loader',
-                        //     options: {
-                        //         presets: babelConfig.presets,
-                        //         plugins: babelConfig.plugins,
-                        //     }
-                        // },
                         {
                             loader: 'vue-loader',
                         },
@@ -129,13 +122,7 @@ module.exports = (env) => {
         },
         resolve: {
             alias: {
-                // this isn't technically needed, since the default `vue` entry for bundlers
-                // is a simple `export * from '@vue/runtime-dom`. However having this
-                // extra re-export somehow causes webpack to always invalidate the module
-                // on the first HMR update and causes the page to reload.
-                // 'vue': '@vue/runtime-dom'
-                // For my current version of Vue
-                'vue': 'vue/dist/vue.esm-bundler.js'
+                vue: 'vue/dist/vue.esm.js'
             }
         },
         plugins: [

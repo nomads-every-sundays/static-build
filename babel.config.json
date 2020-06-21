@@ -9,15 +9,6 @@
           "shippedProposals": true
         }
       }
-    ],
-    [
-      "@vue/app",
-      {
-        "polyfills": [
-          "es.promise",
-          "es.symbol"
-        ]
-      }
     ]
   ],
   "plugins": [

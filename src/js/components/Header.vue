@@ -1,24 +1,13 @@
 <template>
-<!--    <img src="./logo.png">-->
-    <h1>Hello Vue 3!</h1>
-<!--    <button @click="inc">Clicked {{ count }} times.</button>-->
+    <div>
+        <h1>Hello Vue 3!</h1>
+    </div>
 </template>
 
 <script>
-    import { ref } from 'vue'
 
     export default {
         name: 'Header',
-        // setup() {
-        //     const count = ref(0)
-        //     const inc = () => {
-        //         count.value++
-        //     }
-        //     return {
-        //         count,
-        //         inc
-        //     }
-        // }
         mounted() {
             console.log('testing mounted');
         }
