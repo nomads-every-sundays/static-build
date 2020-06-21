@@ -2,9 +2,9 @@ module.exports = ({ options }) => {
     const plugins = [];
 
     // If we building for production
-    if (options.cssnano) {
-        plugins.push(require('cssnano'));
-    }
+    // if (options.cssnano) {
+    //     plugins.push(require('cssnano'));
+    // }
 
     plugins.push(require('autoprefixer'));
 

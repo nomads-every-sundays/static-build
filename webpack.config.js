@@ -9,7 +9,6 @@ module.exports = (env) => {
         mode: env.production ? 'production' : 'development',
         entry: {
             main: path.resolve(__dirname, 'src/js/main.js'),
-            // vue:  'vue/dist/vue.esm-bundler.js',
             vue:  'vue/dist/vue.esm.js',
         },
         output: {
@@ -45,7 +44,6 @@ module.exports = (env) => {
                         {
                             loader: 'css-loader', options: {
                                 sourceMap: !env.production,
-                                modules: true,
                             },
                         },
                         {
@@ -77,7 +75,6 @@ module.exports = (env) => {
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,
-                    // include: [path.join(__dirname, 'src/js/main.js')],
                     use: [
                         {
                             loader: 'babel-loader',
