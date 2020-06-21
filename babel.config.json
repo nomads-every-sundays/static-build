@@ -9,9 +9,17 @@
           "shippedProposals": true
         }
       }
+    ],
+    [
+      "@vue/app",
+      {
+        "polyfills": [
+          "es.promise",
+          "es.symbol"
+        ]
+      }
     ]
   ],
-
   "plugins": [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-transform-object-assign",

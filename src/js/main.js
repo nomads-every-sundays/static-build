@@ -1,4 +1,13 @@
 import '../sass/main.scss';
 
-// HTML files
-import '../html/index.html'
+// Create our app
+import Vue from 'vue';
+import { createApp } from 'vue';
+import App from './App.vue';
+
+import Header from './components/Header.vue';
+// createCommentVNode('Header');
+
+Vue.component('Header');
+
+createApp(App).mount("#app");
