@@ -1,13 +1,7 @@
 import '../sass/main.scss';
-import {isNil} from 'lodash';
 
-console.log(isNil('testing'));
-
+// Create our app
 import { createApp } from 'vue'
-
-// Setup Vue
-// const { createApp } = Vue;
-
-const App = {};
+import App from './App.vue';
 
 createApp(App).mount("#app");

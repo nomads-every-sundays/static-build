@@ -9,7 +9,8 @@ module.exports = (env) => {
         mode: env.production ? 'production' : 'development',
         entry: {
             main: path.resolve(__dirname, 'src/js/main.js'),
-            vue:  'vue/dist/vue.esm-bundler.js',
+            // vue:  'vue/dist/vue.esm-bundler.js',
+            vue:  '@vue/runtime-dom',
         },
         output: {
             path: path.resolve(__dirname, 'dist'),
@@ -67,16 +68,16 @@ module.exports = (env) => {
                     test: /\.vue$/,
                     exclude: /node_modules/,
                     use: [
+                        // {
+                        //     loader: 'babel-loader',
+                        //     options: {
+                        //         presets: babelConfig.presets,
+                        //         plugins: babelConfig.plugins,
+                        //     }
+                        // },
                         {
                             loader: 'vue-loader',
                         },
-                        {
-                            loader: 'babel',
-                            options: {
-                                presets: babelConfig.presets,
-                                plugins: babelConfig.plugins,
-                            }
-                        }
                     ],
                 },
                 {

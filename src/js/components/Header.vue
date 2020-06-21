@@ -1,17 +1,26 @@
 <template>
-    <h1>Testing Header Component</h1>
+<!--    <img src="./logo.png">-->
+    <h1>Hello Vue 3!</h1>
+<!--    <button @click="inc">Clicked {{ count }} times.</button>-->
 </template>
 
 <script>
+    import { ref } from 'vue'
+
     export default {
         name: 'Header',
-        methods: {
-            testing() {
-                console.log('testing header')
-            }
-        },
+        // setup() {
+        //     const count = ref(0)
+        //     const inc = () => {
+        //         count.value++
+        //     }
+        //     return {
+        //         count,
+        //         inc
+        //     }
+        // }
         mounted() {
-            this.testing();
+            console.log('testing mounted');
         }
     }
 </script>
