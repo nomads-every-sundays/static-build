@@ -25,7 +25,8 @@ module.exports = (env) => {
         devServer: {
             contentBase: path.join(__dirname, 'dist'),
             compress: true,
-            port: 9000
+            port: 9000,
+            liveReload: false,
         },
         devtool: env.production ? 'source-map' : 'eval-source-map',
         watch: !env.production,
