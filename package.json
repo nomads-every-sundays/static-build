@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "development": "webpack  --config=webpack.config.js --env.development",
-    "production": "webpack  --config=webpack.config.js --env.production",
-    "start:dev": "webpack-dev-server --config=webpack.config.js --env.development"
+    "development": "webpack  --config=config/webpack.dev.js --env.development",
+    "production": "webpack  --config=config/webpack.prod.js --env.production",
+    "start:dev": "webpack-dev-server --config=config/webpack.dev.js --env.development"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,11 @@
   "homepage": "https://github.com/nomads-every-sundays/static-build#readme",
   "dependencies": {
     "@babel/runtime": "^7.10.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-brands-svg-icons": "^5.13.1",
+    "@fortawesome/free-regular-svg-icons": "^5.13.1",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/vue-fontawesome": "^0.1.10",
     "lodash": "^4.17.15",
     "vue": "^2.6.11"
   },
@@ -42,6 +47,7 @@
     "@vue/compiler-sfc": "^3.0.0-beta.15",
     "autoprefixer": "^9.8.0",
     "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.2",
     "core-js": "^3.6.5",
     "css-loader": "^3.2.0",
@@ -59,6 +65,7 @@
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2"
   }
 }
