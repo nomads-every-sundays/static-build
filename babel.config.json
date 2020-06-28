@@ -9,7 +9,8 @@
           "shippedProposals": true
         }
       }
-    ]
+    ],
+    "@vue/app"
   ],
   "plugins": [
     "@babel/plugin-transform-runtime",
