@@ -1,2 +1,6 @@
-@import './abstract/manifest';
-@import './base/manifest';
+@use './abstract/variables';
+@use './abstract/mixins';
+@use './abstract/functions';
+
+@use './base/reset';
+@use './base/typography';
