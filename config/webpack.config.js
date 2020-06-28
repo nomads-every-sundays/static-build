@@ -4,9 +4,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const babelConfig = require('../babel.config.json');
 
-console.log(path.resolve(__dirname, '../src/js/main.js'));
-console.log(path.resolve(__dirname, '../src/html'));
-
 module.exports = {
     entry: {
         main: path.resolve(__dirname, '../src/js/main.js'),
@@ -32,21 +29,16 @@ module.exports = {
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: MiniCssExtractPlugin.loader,
+                        loader: 'file-loader',
                         options: {
-                            publicPath: path.resolve(__dirname, `../dist/css/`),
-                        },
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            // sourceMap: !env.production,
-                        },
+                            name: '[name].css',
+                            outputPath: 'css',
+                            esModule: false,
+                        }
                     },
                     {
                         loader: 'postcss-loader',
                         options: {
-                            // sourceMap: !env.production,
                             config: {
                                 path: 'postcss.config.js',
                             },
@@ -55,10 +47,20 @@ module.exports = {
                     {
                         loader: 'sass-loader',
                         options: {
-                            // sourceMap: !env.production,
+                            // Prefer `dart-sass`
+                            implementation: require('sass'),
                         },
                     },
                 ],
+            },
+            {
+                test: /\.(woff2?|ttf|otf|eot|svg)$/,
+                exclude: /node_modules/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: path.resolve(__dirname, '../dist/fonts'),
+                },
             },
             {
                 test: /\.vue$/,
