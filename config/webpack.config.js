@@ -3,22 +3,39 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const babelConfig = require('../babel.config.json');
+const { isUndefined } = require('lodash');
+
+const buildPaths = {
+    distPath: path.resolve(__dirname, '../dist'),
+    buildPath: path.resolve(__dirname, '../public'),
+    destinationFolder: isUndefined(process.env.NODE_ENV) ? 'dist' : 'public',
+};
 
 module.exports = {
     entry: {
         main: path.resolve(__dirname, '../src/js/main.js'),
-        vue:  'vue/dist/vue.esm.js',
-        'font-awesome-core': '@fortawesome/fontawesome-svg-core/index.es.js',
-        'font-awesome-vue': '@fortawesome/vue-fontawesome/index.es.js',
     },
     output: {
-        path: path.resolve(__dirname, '../dist'),
+        path: isUndefined(process.env.NODE_ENV) ? buildPaths.distPath : buildPaths.buildPath,
         filename: 'js/[name].js'
     },
     optimization: {
         splitChunks: {
-            chunks: 'async',
             minSize: 30000,
+            cacheGroups: {
+                vueCaches: {
+                    test: /[\\/]node_modules[\\/](vue)[\\/]/,
+                    name: 'vue',
+                    priority: 1,
+                    chunks: 'all',
+                },
+                lodashCaches: {
+                    test: /[\\/]node_modules[\\/](lodash)[\\/]/,
+                    name: 'lodash',
+                    priority: 2,
+                    chunks: 'all',
+                },
+            },
         },
         usedExports: true,
     },
@@ -59,7 +76,7 @@ module.exports = {
                 loader: 'file-loader',
                 options: {
                     name: '[name].[ext]',
-                    outputPath: path.resolve(__dirname, '../dist/fonts'),
+                    outputPath: path.resolve(__dirname, `../${buildPaths.destinationFolder}/fonts`),
                 },
             },
             {
@@ -89,7 +106,9 @@ module.exports = {
                 loader: 'file-loader',
                 options: {
                     name: '[name].[ext]',
-                    publicPath: path.resolve(__dirname, '../dist/img'),
+                    publicPath: isUndefined(process.env.NODE_ENV) ? buildPaths.distPath : buildPaths.buildPath,
+                    outputPath: isUndefined(process.env.NODE_ENV) ? buildPaths.distPath : buildPaths.buildPath,
+                    esModule: false,
                 },
             },
             {
@@ -99,7 +118,7 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            publicPath: path.resolve(__dirname, '../dist'),
+                            publicPath: isUndefined(process.env.NODE_ENV) ? buildPaths.distPath : buildPaths.buildPath,
                         },
                     },
                     {
@@ -126,15 +145,15 @@ module.exports = {
             patterns: [
                 {
                     from: path.resolve(__dirname, '../src/img'),
-                    to: path.resolve(__dirname, '../dist/img'),
+                    to: path.resolve(__dirname, `../${buildPaths.destinationFolder}/img`),
                 },
                 {
                     from: path.resolve(__dirname, '../src/fonts'),
-                    to: path.resolve(__dirname, '../dist/fonts'),
+                    to: path.resolve(__dirname, `../${buildPaths.destinationFolder}/fonts`),
                 },
                 {
                     from: path.resolve(__dirname, '../src/html'),
-                    to: path.resolve(__dirname, '../dist'),
+                    to: isUndefined(process.env.NODE_ENV) ? buildPaths.distPath : buildPaths.buildPath,
                 },
             ]
         }),

@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "development": "webpack  --config=config/webpack.dev.js --env.development",
-    "production": "webpack  --config=config/webpack.prod.js --env.production",
-    "start:dev": "webpack-dev-server --config=config/webpack.dev.js --env.development"
+    "development": "webpack --config=config/webpack.dev.js --env.development",
+    "production": "webpack --config=config/webpack.prod.js --env.production",
+    "start:dev": "webpack-dev-server --config=config/webpack.dev.js --env.development",
+    "deploy": "env NODE_ENV=deploy webpack --config=config/webpack.prod.js --env.production"
   },
   "repository": {
     "type": "git",
