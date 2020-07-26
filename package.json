@@ -69,7 +69,6 @@
     "postcss-scss": "^2.1.1",
     "sass": "^1.26.9",
     "sass-loader": "^8.0.0",
-    "shelljs": "^0.8.4",
     "vue-loader": "^15.9.2",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.41.0",
