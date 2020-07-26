@@ -5,6 +5,7 @@ const { isNil, isUndefined, isEmpty } = require('lodash');
 const { argv } = require('yargs');
 const fs = require('fs');
 const path = require('path');
+const shell = require('shelljs');
 
 /**
  * @author Keith Murphy | nomadmystics@gmail.com
@@ -19,10 +20,11 @@ class ScaffoldComponent {
      * @return
      */
     constructor() {
-        this.JSPath = path.resolve(rootFolder, 'src/js/components');
-        this.SCSSPath = path.resolve(rootFolder, 'src/sass/components');
+        this.JSPath = path.resolve(rootFolder, 'src/js');
+        this.SCSSPath = path.resolve(rootFolder, 'src/sass');
         this.binFolder = path.resolve(rootFolder, 'bin');
 
+        console.log(argv);
         // Sanity check
         if (!isNil(argv.name) && !isUndefined(argv.name)) {
 
@@ -63,7 +65,7 @@ class ScaffoldComponent {
     scaffoldJS = (name) => {
         const componentName = this.capitalizeFirstLetter(name);
 
-        if (!fs.existsSync(`${this.JSPath}/${componentName}.vue`)) {
+        if (!fs.existsSync(`${this.JSPath}/components/${componentName}.vue`)) {
 
             // Read out template file
             fs.readFile(`${this.binFolder}/templates/Template.vue`, 'utf-8', (err, data) => {
@@ -78,12 +80,12 @@ class ScaffoldComponent {
                 updatedTemplate = updatedTemplate.replace(/\$\{template-name\}/gim, componentName);
 
                 // Create our file
-                fs.writeFile(`${this.JSPath}/${componentName}.vue`, updatedTemplate, (err) => {
+                fs.writeFile(`${this.JSPath}/components/${componentName}.vue`, updatedTemplate, (err) => {
                     if (err) {
                         throw new err;
                     }
 
-                    this.addToMainJS();
+                    this.addToMainJS(componentName);
                 });
             });
 
@@ -99,16 +101,12 @@ class ScaffoldComponent {
      * @description
      *
      * @param {string} name
-     * @return
+     * @return {boolean | void}
      */
     scaffoldSCSS = (name) => {
-        // // console.log(rootFolder);
-        // // console.log(argv);
-        // console.log(this.SCSSPath);
-
         const componentName = name.toLowerCase();
 
-        if (!fs.existsSync(`${this.SCSSPath}/${componentName}.scss`)) {
+        if (!fs.existsSync(`${this.SCSSPath}/components/_${componentName}.scss`)) {
 
             // Read out template file
             fs.readFile(`${this.binFolder}/templates/_template.scss`, 'utf-8', (err, data) => {
@@ -122,12 +120,12 @@ class ScaffoldComponent {
                 updatedTemplate = updatedTemplate.replace(/\$\{template-name\}/gim, componentName);
 
                 // Create our file
-                fs.writeFile(`${this.SCSSPath}/_${componentName}.scss`, updatedTemplate, (err) => {
+                fs.writeFile(`${this.SCSSPath}/components/_${componentName}.scss`, updatedTemplate, (err) => {
                     if (err) {
                         throw new err;
                     }
 
-                    this.addToMainScss();
+                    this.addToMainScss(componentName);
                 });
             });
 
@@ -145,7 +143,44 @@ class ScaffoldComponent {
      *
      * @return void
      */
-    addToMainJS = () => {
+    addToMainJS = (componentName) => {
+
+        // Read out template file
+        fs.readFile(`${this.JSPath}/main.js`, 'utf-8', (err, data) => {
+            if (err) {
+                throw new err;
+            }
+            // console.log(data);
+
+            let matches = data.match(/Vue\.component\(([a-z]*)\.name, ([a-z]*)\);/gmi);
+            let lastMatch = matches[matches.length-1];
+
+            console.log(matches)
+            console.log(lastMatch)
+
+            const newComponent = `Vue.component(${componentName}.name, ${componentName});`;
+            shell.sed(`/${lastMatch}/a`, newComponent, `${this.JSPath}/main.js`);
+
+
+            // let updatedTemplate = data;
+            //
+            // // Update our template
+            // updatedTemplate = updatedTemplate.replace(/class="\$\{template-name\}/gim, `class="${componentName.toLowerCase()}`);
+            // updatedTemplate = updatedTemplate.replace(/\$\{template-name\}/gim, componentName);
+            //
+            // // Create our file
+            // fs.writeFile(`${this.JSPath}/${componentName}.vue`, updatedTemplate, (err) => {
+            //     if (err) {
+            //         throw new err;
+            //     }
+            //
+            //     this.addToMainJS();
+            // });
+        });
+
+
+
+
 
     }
 
@@ -153,9 +188,12 @@ class ScaffoldComponent {
      * @author Keith Murphy | nomadmystics@gmail.com
      * @description
      *
+     * @param {string} componentName
      * @return void
      */
-    addToMainScss = () => {
+    addToMainScss = (componentName) => {
+
+        fs.appendFileSync(`${this.SCSSPath}/main.scss`, `@use './components/${componentName}';`);
 
     }
 
