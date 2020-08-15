@@ -2,7 +2,7 @@
 
 const { rootFolder } =  require('../system.js');
 const { isNil, isUndefined, isEmpty } = require('lodash');
-const { argv } = require('yargs');
+const yargs = require('yargs');
 const fs = require('fs');
 const path = require('path');
 
@@ -23,15 +23,36 @@ class ScaffoldComponent {
         this.SCSSPath = path.resolve(rootFolder, 'src/sass');
         this.binFolder = path.resolve(rootFolder, 'bin');
 
-        console.log(argv);
+        this.yargsCommands();
+    }
+
+    /**
+     * @author Keith Murphy | nomadmystics@gmail.com
+     * @description Build our yargs command and scaffold the template
+     *
+     * @return void
+     */
+    yargsCommands = () => {
+
+        const argv = yargs
+            .option('name', {
+                demandOption: true,
+                describe: 'Name of the Template',
+                type: 'string'
+            })
+            .example('--name testing', 'Name of the Template')
+            .help()
+            .argv;
+
         // Sanity check
         if (!isNil(argv.name) && !isUndefined(argv.name)) {
 
-            this.scaffold();
+            this.scaffold(argv);
 
         } else {
             console.log('Please add --name to scaffold');
         }
+
     }
 
     /**
@@ -40,7 +61,7 @@ class ScaffoldComponent {
      *
      * @return {boolean | void}
      */
-    scaffold = () => {
+    scaffold = (argv) => {
         const name = argv.name;
 
         // Sanity check
